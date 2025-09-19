@@ -117,6 +117,7 @@ impl Exercise {
                 .args(RUSTC_COLOR_ARGS)
                 .args(RUSTC_EDITION_ARGS)
                 .output(),
+                
             Mode::Test => Command::new("rustc")
                 .args(&["--test", self.path.to_str().unwrap(), "-o", &temp_file()])
                 .args(RUSTC_COLOR_ARGS)
