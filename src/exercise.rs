@@ -1,5 +1,5 @@
 use regex::Regex;
-use serde::Deserialize;
+use serde::Deserialize
 use std::env;
 use std::fmt::{self, Display, Formatter};
 use std::fs::{self, remove_file, File};
