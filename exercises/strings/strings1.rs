@@ -15,3 +15,5 @@ fn main() {
 fn current_favorite_color() -> String {
     "blue".to_string()
 }
+
+// I added the `.to_string()` method to convert the string literal "blue" to a String object.
