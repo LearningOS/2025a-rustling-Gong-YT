@@ -1,8 +1,7 @@
 /*
-	single linked list merge
-	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
+    single linked list merge
+    This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
@@ -69,47 +68,47 @@ impl<T> LinkedList<T> {
             },
         }
     }
+    
+    // 实现合并逻辑
     pub fn merge(list_a: LinkedList<T>, list_b: LinkedList<T>) -> Self
-	where
-	    T: Ord + Clone, // 新增：约束 T 需支持比较（Ord）和克隆（Clone）
-	{
-		let mut result = LinkedList::new();
-		let mut a_current = list_a.start; // 链表A的遍历指针
-		let mut b_current = list_b.start; // 链表B的遍历指针
+    where
+        T: Ord + Clone,  // 需要比较大小和克隆值
+    {
+        let mut result = LinkedList::new();
+        let mut a_current = list_a.start;  // 链表A的当前节点指针
+        let mut b_current = list_b.start;  // 链表B的当前节点指针
 
-		// 1. 同时遍历两个链表，按值大小依次添加到结果链表
-		while let (Some(a_ptr), Some(b_ptr)) = (a_current, b_current) {
-		    let a_node = unsafe { a_ptr.as_ref() }; // 安全访问A链表当前节点
-		    let b_node = unsafe { b_ptr.as_ref() }; // 安全访问B链表当前节点
+        // 同时遍历两个链表，比较并添加较小的元素
+        while let (Some(a_ptr), Some(b_ptr)) = (a_current, b_current) {
+            let a_node = unsafe { a_ptr.as_ref() };  // 安全访问A节点
+            let b_node = unsafe { b_ptr.as_ref() };  // 安全访问B节点
 
-		    if a_node.val <= b_node.val {
-		        result.add(a_node.val.clone()); // 克隆A节点值添加到结果
-		        a_current = a_node.next; // 移动A链表指针
-		    } else {
-		        result.add(b_node.val.clone()); // 克隆B节点值添加到结果
-		        b_current = b_node.next; // 移动B链表指针
-		    }
-		}
+            if a_node.val <= b_node.val {
+                result.add(a_node.val.clone());  // 添加A节点的值
+                a_current = a_node.next;  // 移动A指针
+            } else {
+                result.add(b_node.val.clone());  // 添加B节点的值
+                b_current = b_node.next;  // 移动B指针
+            }
+        }
 
-		// 2. 处理A链表剩余节点
-		while let Some(a_ptr) = a_current {
-		    let a_node = unsafe { a_ptr.as_ref() };
-		    result.add(a_node.val.clone());
-		    a_current = a_node.next;
-		}
+        // 添加链表A的剩余元素
+        while let Some(a_ptr) = a_current {
+            let a_node = unsafe { a_ptr.as_ref() };
+            result.add(a_node.val.clone());
+            a_current = a_node.next;
+        }
 
-		// 3. 处理B链表剩余节点
-		while let Some(b_ptr) = b_current {
-		    let b_node = unsafe { b_ptr.as_ref() };
-		    result.add(b_node.val.clone());
-		    b_current = b_node.next;
-		}
+        // 添加链表B的剩余元素
+        while let Some(b_ptr) = b_current {
+            let b_node = unsafe { b_ptr.as_ref() };
+            result.add(b_node.val.clone());
+            b_current = b_node.next;
+        }
 
-		result // 返回合并后的新链表
-	}
-	// 填补结束
+        result  // 返回合并后的链表
+    }
 }
-
 
 impl<T> Display for LinkedList<T>
 where
